@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SwipeBall : MonoBehaviour
 {
+    [SerializeField] private GameObject explosion;
     [SerializeField] private int collideCount;
     private Vector2 startPos; // Vector2 start touch screen
     private Vector2 endPos; // Vector2 stop touch screen
@@ -16,12 +17,13 @@ public class SwipeBall : MonoBehaviour
 
     public int powerForce;
     public static event Action<int> OnBallHitWall; 
+    public static event Action<int> OnLoadLevel; 
     private void Start()
     {
         isSwiped = false;
         cam = Camera.main;
         _rgbd2d = GetComponent<Rigidbody2D>();
-        OnBallHitWall?.Invoke(collideCount);
+        OnLoadLevel?.Invoke(collideCount);
     }
 
     private void Update()
@@ -47,11 +49,14 @@ public class SwipeBall : MonoBehaviour
         //CollideCount minus one
         collideCount--;
         OnBallHitWall?.Invoke(collideCount);
-        if (collideCount < 0)
+        if (collideCount == 0)
         {
             //Game Lose
             Debug.Log("Game Lose");
-            Time.timeScale = 0;
+            //Play particle system
+            GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(effect,1f);
+            Destroy(gameObject);
         }
     }
 
@@ -61,13 +66,19 @@ public class SwipeBall : MonoBehaviour
         {
             //Game Won
             Debug.Log("Game Won");
-            Time.timeScale = 0;
+            cam.backgroundColor = Color.black;
+            LeanTween.cancel(cam.gameObject);
+            LeanTween.moveX(cam.gameObject, -1.0f, 0.5f).setEasePunch();
+            LeanTween.moveX(cam.gameObject, 1.0f, 0.5f).setEasePunch();
         }
         else
         {
             //Game Lose
             Debug.Log("Game Lose");
-            Time.timeScale = 0;
+            //Play particle system
+            GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(effect,1f);
+            Destroy(gameObject);
         }
     }
 }
