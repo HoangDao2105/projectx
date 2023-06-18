@@ -22,6 +22,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
+  - m_GUID: c2b552935e2eaec4a80f782866ffb95b
+    m_Address: Assets/Prefabs/Levels/Level2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: edbba20d74651c1489e807aac8d197db
+    m_Address: Assets/Prefabs/Levels/Level3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a3b5c766f3cf8fb4fbb5bff3435c4335
+    m_Address: Assets/Prefabs/Levels/Level4.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: b89b8eabe4887bf40846c5decae9c1b0
+    m_Address: Assets/Prefabs/Levels/Level5.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8c10b02f7dae21a4990a60beda7f3862, type: 2}
   m_SchemaSet:
