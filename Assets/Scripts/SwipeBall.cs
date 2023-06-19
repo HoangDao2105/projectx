@@ -17,7 +17,8 @@ public class SwipeBall : MonoBehaviour
 
     public int powerForce;
     public static event Action<int> OnBallHitWall; 
-    public static event Action<int> OnLoadLevel; 
+    public static event Action<int> OnLoadLevel;
+    public static event Action OnLevelCompeleted;
     private void Start()
     {
         isSwiped = false;
@@ -46,9 +47,6 @@ public class SwipeBall : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        //CollideCount minus one
-        collideCount--;
-        OnBallHitWall?.Invoke(collideCount);
         if (collideCount == 0)
         {
             //Game Lose
@@ -58,6 +56,10 @@ public class SwipeBall : MonoBehaviour
             Destroy(effect,1f);
             Destroy(gameObject);
         }
+        
+        //CollideCount minus one
+        collideCount--;
+        if(collideCount >= 0) OnBallHitWall?.Invoke(collideCount);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,10 +68,13 @@ public class SwipeBall : MonoBehaviour
         {
             //Game Won
             Debug.Log("Game Won");
+            //LeanTween
             cam.backgroundColor = Color.black;
             LeanTween.cancel(cam.gameObject);
             LeanTween.moveX(cam.gameObject, -1.0f, 0.5f).setEasePunch();
             LeanTween.moveX(cam.gameObject, 1.0f, 0.5f).setEasePunch();
+            //Pop up UI
+            OnLevelCompeleted?.Invoke();
         }
         else
         {
